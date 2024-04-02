@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-from utils.file_loader import load_to_database, preprocess_new_files
+from components.file_loader import load_to_database, preprocess_new_files
 
 
 def btn_disable():
