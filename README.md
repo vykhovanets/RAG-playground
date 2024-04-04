@@ -7,12 +7,11 @@
 
 ## Instructions
 
-```json
-./config.json
-{
-  "OPENAI_API_KEY": "...",
-  "COHERE_API_KEY": "...",
-  "CLAUDE_API_KEY": "...",
-  "HF_API_KEY": "...",
-}
+```
+.env
+
+OPENAI_API_KEY=...
+COHERE_API_KEY=...
+ANTHROPIC_API_KEY=...
+HF_API_KEY=...
 ```
