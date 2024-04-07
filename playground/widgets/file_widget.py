@@ -1,6 +1,8 @@
 import pandas as pd
 import streamlit as st
+from utils.persistance import save_project
 from utils.file_loader import load_to_database, preprocess_new_files
+from components.project import Project
 
 
 def btn_disable():
@@ -12,9 +14,11 @@ def btn_enable(updated: bool):
         st.session_state.btn_disabled = False
 
 
-def file_loader_widget(files, db, splitter, embedding_fn):
+def file_widget(prj : Project, db, splitter, embedding_fn):
     file_loader_expander = st.expander("File loader")
+
     with file_loader_expander:
+        files = prj.files
         new_files = st.file_uploader("Upload documents", accept_multiple_files=True)
         if new_files is not None:
             result = preprocess_new_files(new_files, files.for_db)
@@ -33,6 +37,8 @@ def file_loader_widget(files, db, splitter, embedding_fn):
             load_to_database(diff, splitter, db, embedding_fn)
 
             files.in_db.extend(diff)
+            save_project(prj)
+            db.persist()
 
         df = pd.DataFrame(
             data=[file.name for file in files.in_db], columns=["VectorDB content"]

@@ -1,6 +1,6 @@
-from types.file import File
 from typing import List
 
+from components.file import File
 from langchain_community.document_loaders import PyPDFLoader
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 

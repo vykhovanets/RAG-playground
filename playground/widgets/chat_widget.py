@@ -6,10 +6,10 @@ from streamlit.delta_generator import DeltaGenerator
 def display_message(container: DeltaGenerator, message: BaseMessage):
     match message:
         case HumanMessage():
-            with container.chat_message("user"):
+            with container.chat_message("user", avatar="./assets/user.png"):
                 st.markdown(message.content)
         case AIMessage():
-            with container.chat_message("ai"):
+            with container.chat_message("ai", avatar="./assets/ai.png"):
                 st.markdown(message.content)
         case _:
             with container.chat_message("unknown"):

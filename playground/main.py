@@ -1,36 +1,22 @@
-from types.file import Files
-
-from components.database import get_instance
-from components.file_splitter import create_splitter
+from components.context import Context
 from dotenv import load_dotenv
-from langchain.memory import ConversationBufferMemory
-from langchain_openai import OpenAI, OpenAIEmbeddings
+from langchain.chains.conversation.base import ConversationChain
+from utils.persistance import load_project, populate_directories
 from utils.state import add_to_state, add_to_state_lazy
+from widgets.chat_widget import chat_widget
+from widgets.file_widget import file_widget
+from langchain.globals import set_verbose
 
 load_dotenv()
+populate_directories()
 
-# file loader state
+set_verbose(True)
 add_to_state("btn_disabled", True)
-files = add_to_state("files", Files(in_db=[], for_db=[]))
-embedding_fn = add_to_state_lazy("embedding_fn", OpenAIEmbeddings)
-db = add_to_state_lazy("db", get_instance, "collection")
-splitter = add_to_state_lazy(
-    "splitter", create_splitter, "", chunk_size=500, overlap=150
-)
 
+prj = add_to_state_lazy("project", load_project)
 
-# chat state
-llm = add_to_state_lazy("llm", OpenAI, temperature=0)
-memory = add_to_state_lazy("memory", ConversationBufferMemory)
-# conversation = add_to_state_lazy(
-#     "conversation",
-#     ConversationalRetrievalChain.from_llm,
-#     llm=llm,
-#     verbose=True,
-#     memory=memory,
-#     retriever=db.as_retriever(),
-# )
+ctx = Context(prj=prj, chunk_size=500, overlap=125, temp=0)
+conversation = ConversationChain(llm=ctx.llm, memory=ctx.mem)
 
-
-# file_loader_widget(files, lc_db, splitter, embedding_fn)
-# chat_widget(conversation)
+file_widget(prj, ctx.db, ctx.splitter, ctx.embed)
+chat_widget(conversation)
