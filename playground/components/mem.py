@@ -15,7 +15,7 @@ class MemoryType(str, Enum):
         # match type:
         #     case MemoryType.CONVBUFF:
 
-        return ConversationBufferMemory(chat_memory=hist)
+        return ConversationBufferMemory(chat_memory=hist, memory_key="chat_history", return_messages=True)
 
 
 if __name__ == "__main__":

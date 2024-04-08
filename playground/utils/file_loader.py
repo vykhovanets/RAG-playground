@@ -47,7 +47,6 @@ def process(file: File, splitter):
             pass
         case "application/pdf":
             return split_pdf(file, splitter)
-
         case "text/markdown":
             pass
         case "text/plain":
@@ -60,4 +59,4 @@ def process(file: File, splitter):
 
 def load_to_database(files_for_db: List[File], splitter, db, embedding_fn):
     for f in files_for_db:
-        db.from_documents(process(f, splitter), embedding_fn)
+        db.add_documents(process(f, splitter))

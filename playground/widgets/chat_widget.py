@@ -28,7 +28,8 @@ def chat_widget(conversation):
 
         if prompt := st.chat_input("Say something"):
             display_message(history_container, HumanMessage(content=prompt))
-            conversation.predict(input=prompt)
+            result = conversation({"question": prompt})
+            # conversation.predict(input=prompt)
             display_message(
                 history_container, conversation.memory.buffer_as_messages[-1]
             )
