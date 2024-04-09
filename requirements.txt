@@ -1,3 +1,6 @@
-langchain
 streamlit
+langchain
+langchain_openai
 pandoc
+python-dotenv
+chromadb
