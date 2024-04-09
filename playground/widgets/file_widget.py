@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
-from utils.persistance import save_project
-from utils.file_loader import load_to_database, preprocess_new_files
 from components.project import Project
+from utils.file_loader import load_to_database, preprocess_new_files
+from utils.persistance import save_project
 
 
 def btn_disable():
@@ -14,7 +14,7 @@ def btn_enable(updated: bool):
         st.session_state.btn_disabled = False
 
 
-def file_widget(prj : Project, db, splitter, embedding_fn):
+def file_widget(prj: Project, db, splitter, embedding_fn):
     file_loader_expander = st.expander("File loader")
 
     with file_loader_expander:

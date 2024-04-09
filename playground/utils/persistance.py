@@ -6,10 +6,12 @@ from typing import List
 
 from components.project import Project
 
+
 def populate_directories():
     projects_dir()
     histories_dir()
     db_dir()
+
 
 def projects_dir():
     path = Path(os.getenv("PROJECTS_DIR", default="./data/projects"))
@@ -22,10 +24,12 @@ def histories_dir():
     path.mkdir(parents=True, exist_ok=True)
     return path
 
+
 def db_dir():
     path = Path(os.getenv("DB", default="./data/db"))
     path.mkdir(parents=True, exist_ok=True)
     return path
+
 
 def set_active(filename: str):
     (projects_dir() / "latest.txt").write_text(filename)
